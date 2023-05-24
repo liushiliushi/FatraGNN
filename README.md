@@ -1,8 +1,9 @@
 # FatraGNN
 
-This repository (without datasets) is the official implementation of Fairness Learning on Graphs under Distribution Shifts. 
+This repository (without datasets due to space limit) is the official implementation of Fairness Learning on Graphs under Distribution Shifts. 
 
-The full repository with datasets can be found in https://anonymous.4open.science/r/FatraGNN-118F.
+
+The [complete repository](https://anonymous.4open.science/r/FatraGNN-118F) with all the datasets is preferred.
 
 ## Requirements
 
