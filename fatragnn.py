@@ -14,9 +14,9 @@ from utils import read_config
 def run(data, args, data2):
     pbar = tqdm(range(args.runs), unit='run')
     criterion = nn.BCELoss()
-    if args.ood == 4:
+    if args.ood == 2:
         acc, f1, auc_roc, parity, equality = np.zeros([args.runs,len(data2)]), np.zeros([args.runs,len(data2)]), np.zeros([args.runs,len(data2)]), np.zeros([args.runs,len(data2)]), np.zeros([args.runs, len(data2)])
-    elif args.ood == 3:
+    elif args.ood == 1:
         acc, f1, auc_roc, parity, equality = np.zeros([args.runs,len(args.strlist)]), np.zeros([args.runs,len(args.strlist)]), np.zeros([args.runs,len(args.strlist)]), np.zeros([args.runs,len(args.strlist)]), np.zeros([args.runs, len(args.strlist)])
 
     else:
@@ -25,15 +25,10 @@ def run(data, args, data2):
 
     data = data.to(args.device)
 
-    if args.ood == 4:
+    if args.ood == 2:
         for i in range(len(data2)):
-            # if i == args.inidIndex:
-            #     data2[i] = data2[i].to(args.device)
-            #     continue
             data2[i] = data2[i].to(args.device)
             data2[i].test_mask = data2[i].test_mask | data2[i].val_mask | data2[i].test_mask
-    elif args.ood == 2:
-        data2 = data2.to(args.device)
     elif data2 != None:
         data2 = data2.to(args.device)
     else:
@@ -205,8 +200,6 @@ def run(data, args, data2):
                     loss_e.backward()
                     optimizer_e.step()
 
-            # args.disturb = 1
-            # args.modiStru = 1
             if args.disturb == 1 and epoch > args.start:
                 graphEdit.train()
                 encoder.eval()
@@ -257,14 +250,14 @@ def run(data, args, data2):
                     optimizer_c.step()
 
             "=====test======="
-            if args.ood == 3:
+            if args.ood == 1:
                 test_acc = [0 for n in range(len(args.strlist))]
                 best_val_tradeoff = [0 for n in range(len(args.strlist))]
                 test_auc_roc = [0 for n in range(len(args.strlist))]
                 test_f1 = [0 for n in range(len(args.strlist))]
                 test_parity = [0 for n in range(len(args.strlist))]
                 test_equality = [0 for n in range(len(args.strlist))]
-            elif args.ood == 4:
+            elif args.ood == 2:
                 test_acc = [0 for n in range(len(data2))]
                 best_val_tradeoff = [0 for n in range(len(data2))]
                 test_auc_roc = [0 for n in range(len(data2))]
@@ -273,21 +266,7 @@ def run(data, args, data2):
                 test_equality = [0 for n in range(len(data2))]
 
 
-
-            if args.ood == 1 or args.ood == 2:
-                accs, auc_rocs, F1s, tmp_parity, tmp_equality = evaluate_ged3(
-                    data2.x, classifier, discriminator, generator, encoder, data2, args)
-                if auc_rocs['val'] + F1s['val'] + accs['val'] - args.alpha * (
-                        tmp_parity['val'] + tmp_equality['val']) > best_val_tradeoff:
-                    test_acc = accs['test']
-                    test_auc_roc = auc_rocs['test']
-                    test_f1 = F1s['test']
-                    test_parity, test_equality = tmp_parity['test'], tmp_equality['test']
-
-                    best_val_tradeoff = auc_rocs['val'] + F1s['val'] + \
-                                        accs['val'] - (tmp_parity['val'] + tmp_equality['val'])
-
-            elif args.ood == 4:
+            if args.ood == 2:
                 for i in range(len(data2)):
                     accs, auc_rocs, F1s, tmp_parity, tmp_equality = evaluate_ged3(
                         data2[i].x, classifier, discriminator, generator, encoder, data2[i], args)
@@ -302,7 +281,7 @@ def run(data, args, data2):
 
                         best_val_tradeoff[i] = auc_rocs['val'] + F1s['val'] + \
                                             accs['val'] - (tmp_parity['val'] + tmp_equality['val'])
-            elif args.ood == 3:
+            elif args.ood == 1:
                 if epoch != (args.epochs - 1):
                     continue
                 for i in range(len(args.strlist)):
@@ -335,24 +314,13 @@ def run(data, args, data2):
                                         accs['val'] - (tmp_parity['val'] + tmp_equality['val'])
 
 
+        for i in range(len(args.strlist)):
+            acc[count][i] = test_acc[i]
+            f1[count][i] = test_f1[i]
+            auc_roc[count][i] = test_auc_roc[i]
+            parity[count][i] = test_parity[i]
+            equality[count][i] = test_equality[i]
 
-
-
-
-
-        if args.ood == 3 or args.ood == 4:
-            for i in range(len(args.strlist)):
-                acc[count][i] = test_acc[i]
-                f1[count][i] = test_f1[i]
-                auc_roc[count][i] = test_auc_roc[i]
-                parity[count][i] = test_parity[i]
-                equality[count][i] = test_equality[i]
-        else:
-            acc[count] = test_acc
-            f1[count] = test_f1
-            auc_roc[count] = test_auc_roc
-            parity[count] = test_parity
-            equality[count] = test_equality
 
 
     return acc, f1, auc_roc, parity, equality
@@ -367,7 +335,6 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--dic_epochs', type=int, default=2)
     parser.add_argument('--dtb_epochs', type=int, default=5)
-    # parser.add_argument('--g_epochs', type=int, default=5)
     parser.add_argument('--cla_epochs', type=int, default=10)
     parser.add_argument('--clo_epochs', type=int, default=2)
     parser.add_argument('--a_epochs', type=int, default=5)
@@ -384,7 +351,7 @@ if __name__ == '__main__':
     parser.add_argument('--e_wd', type=float, default=0)
     parser.add_argument('--early_stopping', type=int, default=0)
     parser.add_argument('--prop', type=str, default='scatter')
-    # parser.add_argument('--predictfile', type=str, default='vgnn319')
+    parser.add_argument('--predictfile', type=str, default='tmp')
     parser.add_argument('--dropout', type=float, default=0.5)
     parser.add_argument('--hidden', type=int, default=16)
     parser.add_argument('--seed', type=int, default=1)
@@ -408,8 +375,7 @@ if __name__ == '__main__':
     parser.add_argument('--modiStru', type=int, default=0)
     parser.add_argument('--drope_rate', type=float, default=0.5)
     parser.add_argument('--tune', type=str, default='True', help='if tune')
-    parser.add_argument('--times', type=str, default='bail')
-    # parser.add_argument('--configfile', type=str, default='1111', help='configfile')
+    parser.add_argument('--times', type=str, default='config')
     parser.add_argument('--labda', type=float, default=0.5)
 
 
@@ -424,20 +390,8 @@ if __name__ == '__main__':
     print(args)
     data, args.sens_idx, args.corr_sens, args.corr_idx, args.x_min, args.x_max = get_dataset(
         args.dataset, args.inid, args.top_k)
-    if args.ood == 1 or args.ood ==2:
-        if (args.dataset == "pokec"):
-            data2, _, _, _, _, _ = get_dataset(
-                "pokec", args.outid, args.top_k)
-            # data2 = None
-        elif (args.dataset == "credit"):
-            data2, _, _, _, _, _ = get_dataset(
-                args.dataset, args.outid, args.top_k)
-        elif (args.dataset == "bail"):
-            data2, _, _, _, _, _ = get_dataset(
-                args.dataset, args.outid, args.top_k)
-        else:
-            data2 = None
-    elif args.ood == 3:
+
+    if args.ood == 1:
         data2 = []
 
         if args.dataset == "bail":
@@ -506,26 +460,18 @@ if __name__ == '__main__':
         args.class_hom = [0 for i in range(len(args.strlist))]
         args.agg_hom = [0 for i in range(len(args.strlist))]
 
-    elif args.ood == 4:
+    elif args.ood == 2:
         data2 = []
         if args.dataset == "credit":
 
             args.strlist = ['_C1', '_C2', '_C3', '_C4']
-            # args.inidIndex=args.strlist.index(args.inid)
             for i in range(len(args.strlist)):
-                # if args.inidIndex == i:
-                #     data2.append(data)
-                #     continue
                 datatmp, _, _, _, _, _ = get_dataset(
                     args.dataset,  args.strlist[i], args.top_k)
                 data2.append(datatmp)
         elif args.dataset == "bail":
             args.strlist = ['_B1',  '_B2', '_B3', '_B4',]
-            # args.inidIndex = args.strlist.index(args.inid)
             for i in range(len(args.strlist)):
-                # if args.inidIndex == i:
-                #     data2.append(data)
-                #     continue
                 datatmp, _, _, _, _, _ = get_dataset(
                     args.dataset,  args.strlist[i], args.top_k)
                 data2.append(datatmp)
@@ -558,11 +504,12 @@ if __name__ == '__main__':
 
 
     acc, f1, auc_roc, parity, equality = run(data, args, data2)
-    if args.ood == 3 or args.ood == 4:
-        for i in range(len(args.strlist)):
 
-            print("==========={}============".format(args.outid+args.strlist[i]))
-            print('Acc: ', np.mean(acc.T[i]))
-            print('auc_roc: ', np.mean(auc_roc.T[i]))
-            print('parity: ', np.mean(parity.T[i]))
-            print('equality: ', np.mean(equality.T[i]))
+    for i in range(len(args.strlist)):
+
+        print("==========={}============".format(args.outid+args.strlist[i]))
+        print('Acc: ', np.mean(acc.T[i]))
+        print('auc_roc: ', np.mean(auc_roc.T[i]))
+        print('parity: ', np.mean(parity.T[i]))
+        print('equality: ', np.mean(equality.T[i]))
+
