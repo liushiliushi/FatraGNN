@@ -3,38 +3,38 @@ g:
     a_epochs: 5
     align: 1
     c_lr: 0.005
-    cla_epochs: 12
+    cla_epochs: 15
     clo_epochs: 2
     close: 0
-    dic_epochs: 5
+    dic_epochs: 2
     discri: 1
     disturb: 1
     drope_rate: 0.1
     dropf: 0
-    dtb_epochs: 8
+    dtb_epochs: 2
     e_lr: 0.005
     epochs: 400
     g_lr: 0.05
     labda: 1
-    modiStru: 1
+    modiStru: 0
   credit:
-    a_epochs: 2
+    a_epochs: 5
     align: 1
     c_lr: 0.01
-    cla_epochs: 12
+    cla_epochs: 15
     clo_epochs: 2
     close: 0
     dic_epochs: 5
     discri: 1
     disturb: 1
     drope_rate: 0.1
-    dropf: 0
-    dtb_epochs: 5
-    e_lr: 0.005
-    epochs: 600
+    dropf: 1
+    dtb_epochs: 2
+    e_lr: 0.01
+    epochs: 400
     g_lr: 0.05
     labda: 1
-    modiStru: 1
+    modiStru: 0
   pokec:
     a_epochs: 5
     align: 1
