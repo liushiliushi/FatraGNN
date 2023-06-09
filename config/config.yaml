@@ -36,20 +36,20 @@ g:
     labda: 1
     modiStru: 0
   pokec:
-    a_epochs: 5
+    a_epochs: 2
     align: 1
-    c_lr: 0.005
-    cla_epochs: 12
+    c_lr: 0.01
+    cla_epochs: 10
     clo_epochs: 2
     close: 0
-    dic_epochs: 5
+    dic_epochs: 2
     discri: 1
-    disturb: 1
+    disturb: 0
     drope_rate: 0.1
     dropf: 0
-    dtb_epochs: 8
-    e_lr: 0.005
+    dtb_epochs: 5
+    e_lr: 0.01
     epochs: 400
     g_lr: 0.05
     labda: 1
-    modiStru: 1
+    modiStru: 0
