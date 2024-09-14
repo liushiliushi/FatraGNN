@@ -13,10 +13,6 @@ To install requirements:
 pip install -r requirements.txt
 ```
 
-## Dataset
-
-Datasets can be found in https://anonymous.4open.science/r/FatraGNN-118F.
-
 
 ## Training
 
