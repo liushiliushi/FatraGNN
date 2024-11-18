@@ -1,0 +1,100 @@
+appdirs==1.4.4
+brotlipy==0.7.0
+certifi @ file:///croot/certifi_1683875369620/work/certifi
+cffi @ file:///croot/cffi_1670423208954/work
+charset-normalizer==3.2.0
+cmake==3.26.4
+contourpy==1.1.0
+cryptography @ file:///croot/cryptography_1677533068310/work
+cycler==0.11.0
+filelock==3.12.2
+fonttools==4.41.1
+fsspec==2023.12.1
+future @ file:///croot/future_1677599870788/work
+gensim==3.8.3
+idna @ file:///croot/idna_1666125576474/work
+imageio==2.33.1
+importlib-metadata==7.0.1
+importlib-resources==6.0.0
+Jinja2 @ file:///croot/jinja2_1666908132255/work
+joblib==1.3.1
+kiwisolver==1.4.4
+lazy_loader==0.3
+line-profiler==4.1.2
+lit==16.0.6
+littleutils==0.2.2
+llvmlite==0.41.1
+MarkupSafe==2.1.3
+matplotlib==3.7.2
+mkl-fft==1.3.6
+mkl-random @ file:///work/mkl/mkl_random_1682950433854/work
+mkl-service==2.4.0
+mpmath==1.3.0
+networkx==3.1
+numba==0.58.1
+numpy==1.24.4
+nvidia-cublas-cu11==11.10.3.66
+nvidia-cublas-cu12==12.1.3.1
+nvidia-cuda-cupti-cu11==11.7.101
+nvidia-cuda-cupti-cu12==12.1.105
+nvidia-cuda-nvrtc-cu11==11.7.99
+nvidia-cuda-nvrtc-cu12==12.1.105
+nvidia-cuda-runtime-cu11==11.7.99
+nvidia-cuda-runtime-cu12==12.1.105
+nvidia-cudnn-cu11==8.5.0.96
+nvidia-cudnn-cu12==8.9.2.26
+nvidia-cufft-cu11==10.9.0.58
+nvidia-cufft-cu12==11.0.2.54
+nvidia-curand-cu11==10.2.10.91
+nvidia-curand-cu12==10.3.2.106
+nvidia-cusolver-cu11==11.4.0.1
+nvidia-cusolver-cu12==11.4.5.107
+nvidia-cusparse-cu11==11.7.4.91
+nvidia-cusparse-cu12==12.1.0.106
+nvidia-nccl-cu11==2.14.3
+nvidia-nccl-cu12==2.18.1
+nvidia-nvjitlink-cu12==12.3.101
+nvidia-nvtx-cu11==11.7.91
+nvidia-nvtx-cu12==12.1.105
+ogb==1.3.6
+outdated==0.2.2
+packaging @ file:///croot/packaging_1678965309396/work
+pandas==2.0.3
+Pillow==10.0.0
+pooch @ file:///tmp/build/80754af9/pooch_1623324770023/work
+protobuf==4.25.2
+psutil @ file:///opt/conda/conda-bld/psutil_1656431268089/work
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pyg-lib==0.3.1+pt21cu121
+pyOpenSSL @ file:///croot/pyopenssl_1677607685877/work
+pyparsing @ file:///opt/conda/conda-bld/pyparsing_1661452539315/work
+PySocks @ file:///tmp/build/80754af9/pysocks_1605305779399/work
+python-dateutil==2.8.2
+pytz==2023.3
+PyWavelets==1.4.1
+PyYAML @ file:///croot/pyyaml_1670514731622/work
+requests==2.31.0
+scikit-image==0.21.0
+scikit-learn==1.3.0
+scipy==1.10.1
+six==1.16.0
+smart-open==6.4.0
+sympy==1.12
+tensorboardX==2.6.2.2
+texttable==1.7.0
+threadpoolctl==3.2.0
+tifffile==2023.7.10
+torch==2.1.1
+torch-cluster==1.6.3+pt21cu121
+torch-scatter==2.1.2+pt21cu121
+torch-sparse==0.6.18+pt21cu121
+torch-spline-conv==1.2.2+pt21cu121
+torch_geometric==2.4.0
+torchaudio==2.1.1
+torchvision==0.16.1
+tqdm @ file:///croot/tqdm_1679561862951/work
+triton==2.1.0
+typing_extensions==4.7.1
+tzdata==2023.3
+urllib3==2.0.3
+zipp==3.16.2
